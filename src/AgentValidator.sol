@@ -578,6 +578,7 @@ contract AgentValidator is Ownable, Pausable, ReentrancyGuard {
      */
     function slashValidator(address validator) external onlyOwner {
         require(validators[validator].active, "NotValidator");
+        require(activeVotes[validator] == 0, "Validator has active votes");
 
         uint256 slashAmount = validators[validator].stakedAmount / 2;
         uint256 remaining = validators[validator].stakedAmount - slashAmount;
